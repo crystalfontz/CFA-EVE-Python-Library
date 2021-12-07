@@ -95,6 +95,7 @@ class iface:
 			sdata.extend(data)
 		else:
 			return False
+		#print(sdata)
 		return self.spi.xfer3(sdata)
 
 	def w16(self, addr, data):

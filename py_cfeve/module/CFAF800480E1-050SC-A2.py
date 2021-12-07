@@ -1,7 +1,4 @@
 #===========================================================================
-#  Display definitions for:
-#    CFA10100 with BT817
-#===========================================================================
 #
 # Crystalfontz Raspberry-Pi Python example library for FTDI / BridgeTek
 # EVE graphic accelerators.
@@ -10,8 +7,6 @@
 #
 # This file is part of the port/adaptation of existing C based EVE libraries
 # to Python for Crystalfontz EVE based displays.
-#
-# THIS LIBRARY IS A WORK IN PROGRESS!
 #
 # 2021-10-20 Mark Williams / Crystalfontz America Inc.
 # https:#www.crystalfontz.com/products/eve-accelerated-tft-displays.php
@@ -47,7 +42,9 @@ EVE_DEVICE = 817
 EVE_CLOCK_SPEED = 60000000
 
 # Touch
-HAS_GOODIX = False
+TOUCH_RESISTIVE = False
+TOUCH_CAPACITIVE = False
+TOUCH_GOODIX_CAPACITIVE = True
 
 # Define RGB output pins order, determined by PCB layout
 LCD_SWIZZLE = 0
