@@ -1,9 +1,14 @@
 # CFA-EVE-Python-Library
-Python example library for Crystalfontz FTDI / BridgeTek EVE graphic accelerators.
+Python example library for Crystalfontz FTDI/BridgeTek EVE graphic accelerators.
 
-THIS LIBRARY IS A WORK IN PROGRESS!
+This library is currently aimed at using EVE based display modules with Raspberry Pi computers.
 
-This library is currently aimed at using EVE based display modules with Raspberry Pi computers. Interfaces may be added for other host computer systems at a later date.
+Crystalfontz EVE displays can viewed/purchased on the [Crystafontz EVE Accelerated TFT Displays webpage](https://www.crystalfontz.com/products/eve-accelerated-tft-displays.php).
+
+A list of the displays supported by this library are [here in the module support document](module_support.md).
+
+Please consider this library to be a work-in-progress.
+Some EVE features are not yet supported, and interfaces for other host computer systems will be added at a later date.
 
 Example connection guide using a Crystalfontz EVE breakout board (CFA10098)
 
