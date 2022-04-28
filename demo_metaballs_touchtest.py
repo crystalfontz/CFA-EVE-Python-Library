@@ -47,7 +47,7 @@ import random
 #============================================================================
 
 #see the py_cfeye/modules directory for supported Crystalfontz modules/displays
-CFA_MODULE = 'CFAF480128A0-039TC-A1'
+CFA_MODULE = 'CFAF240320A0-024SC-A1-1'
 #see the py_cfeye/interfaces directory for supported coms interfaces
 CFA_MODULE_INTERFACE = 'rpispi'
 
@@ -108,18 +108,36 @@ class metaball_demo:
 
 	def prepare(self):
 		#do pre display loop EVE memory writes
-		if (self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_RAW_XY) & 0x8000) == 0:
+		#if (self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_RAW_XY) & 0x8000) == 0:
 			#touch panel is being touched
-			self.sx = self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_SCREEN_XY + 2)
-			self.sy = self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_SCREEN_XY)
-			self.center_x = 16 * self.sx
-			self.center_y = 16 * self.sy
-			self.vel = 8
+			#self.sx = self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_SCREEN_XY + 2)
+			#self.sy = self.eve.iface.r16(eve.defs.EVE_REG_TOUCH_SCREEN_XY)
+
+		#report touches
+		r = self.eve.iface.r32(eve.defs.EVE_REG_CTOUCH_TOUCH0_XY)
+		self.sx = (r >> 16) & 0xFFFF
+		self.sy = r & 0xFFFF
+		if (r & 0x8000) == 0:
+		    #touch0
+		    print("touch0: x={} y={}".format(self.sx, self.sy))
+		    self.center_x = 16 * self.sx
+		    self.center_y = 16 * self.sy
+		    self.vel = 8
 		else:
-			#no touch detected
-			self.center_x = self.eve.LCD_WIDTH * 16 / 2
-			self.center_y = self.eve.LCD_HEIGHT * 16 / 2
-			self.vel = 2
+		    #no touch0 detected
+		    self.center_x = self.eve.LCD_WIDTH * 16 / 2
+		    self.center_y = self.eve.LCD_HEIGHT * 16 / 2
+		    self.vel = 2
+
+		t = self.eve.iface.r32(eve.defs.EVE_REG_CTOUCH_TOUCH1_XY)
+		if ((t & 0x8000) == 0):
+		    print("touch1: x={} y={}".format(t >> 16, t & 0xFFFF))
+		t = self.eve.iface.r32(eve.defs.EVE_REG_CTOUCH_TOUCH2_XY)
+		if ((t & 0x8000) == 0):
+		    print("touch2: x={} y={}".format(t >> 16, t & 0xFFFF))
+		t = self.eve.iface.r32(eve.defs.EVE_REG_CTOUCH_TOUCH3_XY)
+		if ((t & 0x8000) == 0):
+		    print("touch3: x={} y={}\n".format(t >> 16, t & 0xFFFF))
 
 		for i in range(0, self.num_blobs):
 			if self.blobs[i].x < self.center_x:
@@ -209,6 +227,9 @@ eve.set_backlight(brightness)
 if eve.module.TOUCH_RESISTIVE == True:
 	eve.cocmd.manual_calibrate()
 
+#eve.iface.w8(eve.defs.EVE_REG_TOUCH_MODE, eve.defs.EVE_CTOUCH_MODE_EXTENDED)
+eve.iface.w8(eve.defs.EVE_REG_CTOUCH_EXTENDED, 0x00)
+
 #init the demo
 demo = metaball_demo(eve)
 
@@ -256,7 +277,7 @@ while True:
 		#
 		print("")
 		print("loop-count: {}".format(loop_count))
-		print("prep-time:  {:.3f}mS".format(prep_time_elapsed * 1000.0))
+		print(" prep-time:  {:.3f}mS".format(prep_time_elapsed * 1000.0))
 		print("setup-time: {:.3f}mS".format(setup_time_elapsed * 1000.0))
 		print(" wait-time: {:.3f}mS".format(wait_time_elapsed * 1000.0))
 		print("       fps: {:.3f}".format(fps))

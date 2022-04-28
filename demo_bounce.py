@@ -45,7 +45,7 @@ from py_cfeve import cfeve
 #============================================================================
 
 #see the py_cfeye/modules directory for supported Crystalfontz modules/displays
-CFA_MODULE = 'CFAF800480E1-050SR-A2'
+CFA_MODULE = 'CFAF480128A0-039TC-A1'
 #see the py_cfeye/interfaces directory for supported coms interfaces
 CFA_MODULE_INTERFACE = 'rpispi'
 

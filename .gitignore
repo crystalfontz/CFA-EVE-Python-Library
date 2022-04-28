@@ -6,3 +6,6 @@ __pycache__/
 # unfinished
 demo_signature_incomplete.py
 demo_sketch_incomplete.py
+
+#vscode
+*.code-workspace
